@@ -6,157 +6,517 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <style>
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #0b0f19;
-      color: #e5e7eb;
-      margin: 0;
-      padding: 40px 16px;
+    :root{
+      /* NetResults.ai vibe… dark… clean… orange CTA… subtle blue accent */
+      --bg0:#060814;
+      --bg1:#070b18;
+      --card:#0b1223;
+      --card2:#0a1020;
+      --line:rgba(255,255,255,.10);
+      --text:#f3f6ff;
+      --muted:rgba(243,246,255,.70);
+      --muted2:rgba(243,246,255,.55);
+      --accentA:#f59e0b;
+      --accentA2:#fb923c;
+      --accentB:#3b82f6;
+      --good:#10b981;
+      --bad:#ef4444;
+      --shadow: 0 28px 70px rgba(0,0,0,.55);
+      --radius: 20px;
     }
 
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background: #111827;
-      border-radius: 14px;
-      padding: 28px;
-      box-shadow: 0 20px 40px rgba(0,0,0,.4);
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1000px 700px at 20% -10%, rgba(59,130,246,.22), transparent 60%),
+        radial-gradient(900px 650px at 92% 8%, rgba(245,158,11,.18), transparent 60%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      min-height:100vh;
+      padding:44px 16px 56px;
     }
 
-    h1 {
-      margin-top: 0;
-      font-size: 28px;
+    .wrap{max-width:980px;margin:0 auto}
+
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
     }
 
-    p {
-      color: #9ca3af;
-      line-height: 1.5;
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width: 0;
     }
 
-    label {
-      display: block;
-      margin-top: 18px;
-      font-weight: 600;
-      font-size: 14px;
+    .mark{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg, rgba(245,158,11,.95), rgba(59,130,246,.95));
+      box-shadow: 0 16px 40px rgba(0,0,0,.40);
+      flex: 0 0 auto;
     }
 
-    input, textarea, select {
-      width: 100%;
-      margin-top: 6px;
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #1f2937;
-      background: #020617;
-      color: #e5e7eb;
-      font-size: 14px;
+    .title{
+      min-width:0;
     }
 
-    textarea {
-      min-height: 100px;
+    h1{
+      margin:0;
+      font-size:34px;
+      letter-spacing:-.2px;
+      line-height:1.12;
     }
 
-    button {
-      margin-top: 24px;
-      padding: 14px 18px;
+    .sub{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.6;
+      max-width:80ch;
+      font-size:14.8px;
+    }
+
+    .pill{
+      padding:10px 12px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,18,35,.45);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:12.5px;
+      white-space:nowrap;
+      align-self:flex-start;
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(11,18,35,.92), rgba(8,12,24,.92));
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:18px;
+      overflow:hidden;
+    }
+
+    .section{
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(5,8,18,.30);
+      border-radius: 16px;
+      padding:16px;
+      margin-top:14px;
+    }
+
+    .section h2{
+      margin:0 0 6px;
+      font-size:16px;
+      letter-spacing:.2px;
+    }
+
+    .section p{
+      margin:0 0 12px;
+      color:var(--muted2);
+      line-height:1.5;
+      font-size:13px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+      .top{flex-direction:column;align-items:flex-start}
+      .pill{width:fit-content}
+      h1{font-size:30px}
+    }
+
+    label{
+      display:block;
+      font-weight:680;
+      font-size:13px;
+      margin: 10px 0 6px;
+    }
+
+    .hint{
+      margin-top:6px;
+      color:var(--muted2);
+      font-size:12.5px;
+      line-height:1.45;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select{
+      width:100%;
+      padding:12px 12px;
       border-radius: 12px;
-      border: none;
-      background: linear-gradient(90deg, #f59e0b, #fb923c);
-      color: #111827;
-      font-weight: 800;
-      cursor: pointer;
-      font-size: 14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(2,6,23,.55);
+      color: var(--text);
+      outline:none;
+      font-size:14px;
     }
 
-    .status {
-      margin-top: 16px;
-      font-size: 14px;
-      color: #9ca3af;
+    textarea{min-height:110px;resize:vertical}
+
+    .choiceRow{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px 14px;
+      padding:10px 10px 6px;
+      border-radius: 12px;
+      border:1px solid rgba(255,255,255,.08);
+      background: rgba(2,6,23,.35);
     }
+
+    .chip{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(11,18,35,.45);
+      cursor:pointer;
+      user-select:none;
+    }
+
+    .chip input{accent-color: var(--accentB)}
+    .chip span{font-size:13px;color:rgba(243,246,255,.92)}
+
+    .divider{
+      height:1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
+      margin:14px 0 6px;
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .btn{
+      border:none;
+      cursor:pointer;
+      padding:13px 16px;
+      border-radius: 14px;
+      font-weight:900;
+      color:#0a1020;
+      background: linear-gradient(90deg, var(--accentA), var(--accentA2));
+      box-shadow: 0 18px 38px rgba(0,0,0,.35);
+      font-size:14px;
+    }
+
+    .btn:disabled{
+      opacity:.6;
+      cursor:not-allowed;
+    }
+
+    .status{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.45;
+      max-width: 56ch;
+    }
+
+    .warn{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(239,68,68,.35);
+      background: rgba(239,68,68,.10);
+      color: rgba(255,220,220,.92);
+      display:none;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .ok{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(16,185,129,.28);
+      background: rgba(16,185,129,.10);
+      color: rgba(214,255,241,.92);
+      display:none;
+      font-size:13px;
+      line-height:1.5;
+    }
+
+    .small{
+      font-size:12px;
+      color:rgba(243,246,255,.62);
+    }
+
+    .hide{display:none !important}
   </style>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Outbound AI Agent Onboarding</h1>
-    <p>
-      This takes about 5 minutes. The goal is to lock down your outbound campaign
-      so the AI sounds sharp, stays compliant, and doesn’t burn your lead list.
-    </p>
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="mark" aria-hidden="true"></div>
+        <div class="title">
+          <h1>Outbound AI Agent Onboarding</h1>
+          <div class="sub">
+            This takes about 5 minutes. We’re capturing the operational rules so the build goes fast… and the campaign doesn’t get messy later.
+          </div>
+        </div>
+      </div>
+      <div class="pill">NetResults AI… outbound build sheet</div>
+    </div>
 
-    <form id="onboardingForm">
-      <label>Business name</label>
-      <input name="business_name" required>
+    <div class="card">
+      <form id="onboardingForm">
 
-      <label>Primary contact name</label>
-      <input name="contact_name" required>
+        <div class="section">
+          <h2>1… Company and notifications</h2>
+          <p>Who we’re building for… and where updates should go.</p>
 
-      <label>Primary contact email</label>
-      <input name="contact_email" type="email" required>
+          <div class="grid">
+            <div>
+              <label>Business name</label>
+              <input name="business_name" type="text" required placeholder="Example… Acme Dental Group">
+            </div>
+            <div>
+              <label>Website URL</label>
+              <input name="website_url" type="text" required placeholder="Example… https://yourwebsite.com">
+            </div>
+          </div>
 
-      <label>Caller ID phone number</label>
-      <input name="caller_id" required>
+          <div class="grid">
+            <div>
+              <label>Primary contact name</label>
+              <input name="contact_name" type="text" required placeholder="Example… Sarah Thompson">
+            </div>
+            <div>
+              <label>Timezone for calling windows</label>
+              <select name="timezone" required>
+                <option value="">Select…</option>
+                <option>Pacific</option>
+                <option>Mountain</option>
+                <option>Central</option>
+                <option>Eastern</option>
+                <option>Arizona</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
 
-      <label>Primary campaign goal</label>
-      <input name="primary_goal" required>
+          <div class="grid">
+            <div>
+              <label>Best email address for updates and notifications</label>
+              <input name="notify_email" type="email" required placeholder="Example… ops@yourdomain.com">
+              <div class="hint">Call summaries… build questions… issues… go here.</div>
+            </div>
+            <div>
+              <label>Best mobile number for text notifications</label>
+              <input name="notify_mobile" type="tel" required placeholder="Example… (858) 555 1234">
+              <div class="hint">Used for important alerts only… not marketing.</div>
+            </div>
+          </div>
 
-      <label>Single success action</label>
-      <input name="success_action" required>
+          <div class="grid">
+            <div>
+              <label>Caller ID display number for callbacks</label>
+              <input name="caller_id_display_number" type="tel" placeholder="Example… (858) 555 7777">
+              <div class="hint">This is the number leads see on their phone and the number they’ll call back from the missed call log.</div>
+            </div>
+            <div>
+              <label>Industry</label>
+              <input name="industry" type="text" required placeholder="Example… Dental… Med spa… Chiro… Home services… Real estate">
+            </div>
+          </div>
+        </div>
 
-      <label>Core offer or reason for the call</label>
-      <textarea name="offer" required></textarea>
+        <div class="section">
+          <h2>2… End goal of the call</h2>
+          <p>Pick the one outcome that defines success for this campaign.</p>
 
-      <label>Lead source</label>
-      <input name="lead_source" required>
+          <label>What is the primary end goal of these calls?</label>
+          <div class="choiceRow" role="group" aria-label="End goal">
+            <label class="chip"><input type="radio" name="end_goal" value="Book appointment" required><span>Book appointment</span></label>
+            <label class="chip"><input type="radio" name="end_goal" value="Transfer to human"><span>Transfer to human</span></label>
+            <label class="chip"><input type="radio" name="end_goal" value="Collect info for callback"><span>Collect info for callback</span></label>
+            <label class="chip"><input type="radio" name="end_goal" value="Qualify interest only"><span>Qualify interest only</span></label>
+            <label class="chip"><input type="radio" name="end_goal" value="Deliver info and end call"><span>Deliver info and end call</span></label>
+          </div>
 
-      <label>Opted in to be contacted</label>
-      <select name="opt_in" required>
-        <option value="">Select…</option>
-        <option>Yes</option>
-        <option>No</option>
-        <option>Not sure</option>
-      </select>
+          <label>What counts as a successful call?</label>
+          <input name="success_definition" type="text" required
+                 placeholder="Example… They agree to a follow up and confirm the best time… or they accept a transfer…">
+          <div class="hint">Be concrete. If this is vague, reporting becomes vague.</div>
+        </div>
 
-      <label>Relationship to leads</label>
-      <textarea name="lead_relationship" required></textarea>
+        <div class="section" id="transferSection">
+          <h2>3… Human transfer details</h2>
+          <p>Only required if the end goal includes a live transfer.</p>
 
-      <label>Allowed call windows</label>
-      <input name="call_windows" required>
+          <div class="grid">
+            <div>
+              <label>Name of the person Lexi should transfer to</label>
+              <input name="transfer_person_name" type="text" placeholder="Example… Jessica… Front Desk">
+            </div>
+            <div>
+              <label>Call transfer phone number</label>
+              <input name="transfer_phone_number" type="tel" placeholder="Example… (858) 555 9988">
+              <div class="hint">This number must be monitored during call windows.</div>
+            </div>
+          </div>
 
-      <label>Hard stop phrases</label>
-      <textarea name="hard_stops" required></textarea>
+          <div class="hint small">If nobody picks up transfers, you’ll burn leads fast. If that’s risky, choose “Collect info for callback” instead.</div>
+        </div>
 
-      <button type="submit">Submit onboarding</button>
-      <div class="status" id="status"></div>
-    </form>
+        <div class="section">
+          <h2>4… Guardrails and compliance</h2>
+          <p>This protects your brand and prevents list burn.</p>
+
+          <label class="chip" style="width:fit-content">
+            <input type="checkbox" name="lead_list_confirm" required>
+            <span>I confirm I have the right to contact this list and the numbers are valid</span>
+          </label>
+          <div class="hint">If the list is bad, results will be bad regardless of the calling system.</div>
+
+          <label>Should Lexi disclose she is an AI?</label>
+          <div class="choiceRow" role="group" aria-label="AI disclosure">
+            <label class="chip"><input type="radio" name="ai_disclosure" value="Disclose immediately" required><span>Disclose immediately</span></label>
+            <label class="chip"><input type="radio" name="ai_disclosure" value="Only if asked"><span>Only if asked</span></label>
+            <label class="chip"><input type="radio" name="ai_disclosure" value="Present as assistant"><span>Present as assistant</span></label>
+          </div>
+
+          <label>Hard stop phrases… end the call immediately if you hear these</label>
+          <textarea name="hard_stops" required placeholder="Examples… Put me on your do not call list… Stop calling… Not interested… How did you get my number"></textarea>
+        </div>
+
+        <div class="section">
+          <h2>5… Call mechanics</h2>
+          <p>Simple rules that prevent awkward outcomes.</p>
+
+          <label>If Lexi reaches voicemail, what should she do?</label>
+          <div class="choiceRow" role="group" aria-label="Voicemail behavior">
+            <label class="chip"><input type="radio" name="voicemail_action" value="Hang up" required><span>Hang up</span></label>
+            <label class="chip"><input type="radio" name="voicemail_action" value="Leave a short voicemail"><span>Leave a short voicemail</span></label>
+            <label class="chip"><input type="radio" name="voicemail_action" value="Voicemail only for warm leads"><span>Voicemail only for warm leads</span></label>
+          </div>
+
+          <label>If a human answers but is busy, what should Lexi do?</label>
+          <div class="choiceRow" role="group" aria-label="Busy handling">
+            <label class="chip"><input type="radio" name="busy_handling" value="Offer to call back later" required><span>Offer to call back later</span></label>
+            <label class="chip"><input type="radio" name="busy_handling" value="Offer to send info by SMS or email"><span>Offer to send info by SMS or email</span></label>
+            <label class="chip"><input type="radio" name="busy_handling" value="Ask for a better time and end the call"><span>Ask for a better time and end the call</span></label>
+          </div>
+
+          <label>Allowed call windows</label>
+          <input name="call_windows" type="text" required placeholder="Example… Mon–Fri 9am–5pm… No weekends">
+          <div class="hint">Include timezone… and any blackout periods.</div>
+
+          <label>Anything else we should know… constraints… weird edge cases… dealbreakers</label>
+          <textarea name="notes" placeholder="Examples… Don’t mention pricing… If asked how we got their number, say it’s from a public list… If they say ‘text me’, send info and exit politely"></textarea>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="actions">
+          <div class="status" id="status">
+            When you submit… we email the results to Todd and store nothing else.
+          </div>
+          <button class="btn" id="submitBtn" type="submit">Submit onboarding</button>
+        </div>
+
+        <div id="okBox" class="ok">Submitted successfully… you can close this tab.</div>
+        <div id="errBox" class="warn">Something went wrong… please try again. If it keeps failing, screenshot this page and text Todd.</div>
+
+      </form>
+    </div>
   </div>
 
   <script>
     const form = document.getElementById("onboardingForm");
     const status = document.getElementById("status");
+    const submitBtn = document.getElementById("submitBtn");
+    const okBox = document.getElementById("okBox");
+    const errBox = document.getElementById("errBox");
+    const transferSection = document.getElementById("transferSection");
+
+    function getRadioValue(name){
+      const el = document.querySelector(`input[name="${name}"]:checked`);
+      return el ? el.value : "";
+    }
+
+    function updateTransferSection(){
+      const goal = getRadioValue("end_goal");
+      const show = (goal === "Transfer to human");
+      transferSection.classList.toggle("hide", !show);
+
+      // If hidden, clear values so you don't get stale data
+      if(!show){
+        const n = form.querySelector('input[name="transfer_person_name"]');
+        const p = form.querySelector('input[name="transfer_phone_number"]');
+        if(n) n.value = "";
+        if(p) p.value = "";
+      }
+    }
+
+    document.querySelectorAll('input[name="end_goal"]').forEach(r => {
+      r.addEventListener("change", updateTransferSection);
+    });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      okBox.style.display = "none";
+      errBox.style.display = "none";
+
+      submitBtn.disabled = true;
       status.textContent = "Submitting…";
 
       const data = Object.fromEntries(new FormData(form).entries());
+
       data.submitted_at = new Date().toISOString();
       data.page = location.href;
 
-      try {
+      // radio fields
+      data.end_goal = getRadioValue("end_goal");
+      data.ai_disclosure = getRadioValue("ai_disclosure");
+      data.voicemail_action = getRadioValue("voicemail_action");
+      data.busy_handling = getRadioValue("busy_handling");
+
+      // checkbox fields
+      data.lead_list_confirm = !!form.querySelector('input[name="lead_list_confirm"]:checked');
+
+      try{
         const res = await fetch("/api/outbound-onboarding", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
 
-        if (!res.ok) throw new Error();
+        if(!res.ok) throw new Error("Bad response");
 
-        status.textContent = "Submitted successfully.";
+        status.textContent = "Submitted…";
+        okBox.style.display = "block";
         form.reset();
-      } catch {
-        status.textContent = "Something went wrong. Please try again.";
+        updateTransferSection();
+      }catch(err){
+        status.textContent = "Submission failed.";
+        errBox.style.display = "block";
+      }finally{
+        submitBtn.disabled = false;
       }
     });
+
+    // init
+    updateTransferSection();
   </script>
 </body>
 </html>
