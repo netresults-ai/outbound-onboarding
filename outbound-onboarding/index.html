@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Outbound AI Agent Onboarding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0b0f19;
+      color: #e5e7eb;
+      margin: 0;
+      padding: 40px 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #111827;
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0,0,0,.4);
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    p {
+      color: #9ca3af;
+      line-height: 1.5;
+    }
+
+    label {
+      display: block;
+      margin-top: 18px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      margin-top: 6px;
+      padding: 12px;
+      border-radius: 10px;
+      border: 1px solid #1f2937;
+      background: #020617;
+      color: #e5e7eb;
+      font-size: 14px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+
+    button {
+      margin-top: 24px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(90deg, #f59e0b, #fb923c);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 14px;
+      color: #9ca3af;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Outbound AI Agent Onboarding</h1>
+    <p>
+      This takes about 5 minutes. The goal is to lock down your outbound campaign
+      so the AI sounds sharp, stays compliant, and doesn’t burn your lead list.
+    </p>
+
+    <form id="onboardingForm">
+      <label>Business name</label>
+      <input name="business_name" required>
+
+      <label>Primary contact name</label>
+      <input name="contact_name" required>
+
+      <label>Primary contact email</label>
+      <input name="contact_email" type="email" required>
+
+      <label>Caller ID phone number</label>
+      <input name="caller_id" required>
+
+      <label>Primary campaign goal</label>
+      <input name="primary_goal" required>
+
+      <label>Single success action</label>
+      <input name="success_action" required>
+
+      <label>Core offer or reason for the call</label>
+      <textarea name="offer" required></textarea>
+
+      <label>Lead source</label>
+      <input name="lead_source" required>
+
+      <label>Opted in to be contacted</label>
+      <select name="opt_in" required>
+        <option value="">Select…</option>
+        <option>Yes</option>
+        <option>No</option>
+        <option>Not sure</option>
+      </select>
+
+      <label>Relationship to leads</label>
+      <textarea name="lead_relationship" required></textarea>
+
+      <label>Allowed call windows</label>
+      <input name="call_windows" required>
+
+      <label>Hard stop phrases</label>
+      <textarea name="hard_stops" required></textarea>
+
+      <button type="submit">Submit onboarding</button>
+      <div class="status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById("onboardingForm");
+    const status = document.getElementById("status");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.textContent = "Submitting…";
+
+      const data = Object.fromEntries(new FormData(form).entries());
+      data.submitted_at = new Date().toISOString();
+      data.page = location.href;
+
+      try {
+        const res = await fetch("/api/outbound-onboarding", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw new Error();
+
+        status.textContent = "Submitted successfully.";
+        form.reset();
+      } catch {
+        status.textContent = "Something went wrong. Please try again.";
+      }
+    });
+  </script>
+</body>
+</html>
